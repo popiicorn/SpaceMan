@@ -2,28 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FoceController : MonoBehaviour
+public class FoceController2D : MonoBehaviour
 {
-    private Rigidbody rb;
-    private int upForce;
+    private Rigidbody2D rb;
+    private float upForce;
     private Vector3 mousePosition;
     private Vector3 objPosition;
 
-    public int force;
-    public int power;
+    public float force;
+    public float power;
+    public float rote;
 
     [SerializeField]
     float LimitSpeed;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody2D>();
         upForce = force;
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             mousePosition = Input.mousePosition;
             mousePosition.z = 10.0f;
@@ -34,8 +35,9 @@ public class FoceController : MonoBehaviour
 
         if (rb.velocity.magnitude > LimitSpeed)
         {
-            rb.velocity = new Vector3(rb.velocity.x / 1.1f, rb.velocity.y, rb.velocity.z / 1.1f);
+            rb.velocity = new Vector3(rb.velocity.x / 1.1f, rb.velocity.y / 1.1f);
         }
-    }
 
+        transform.Rotate(new Vector3(0, 0, rote) * Time.deltaTime, Space.World);
+    }
 }
